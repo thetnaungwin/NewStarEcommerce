@@ -2,14 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getProductById } from '@/lib/products';
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function GET(request: NextRequest, { params }: ProductPageProps) {
   try {
-    const product = await getProductById(params.id);
+    const { id } = await params;
+    const product = await getProductById(id);
 
     if (!product) {
       return NextResponse.json(

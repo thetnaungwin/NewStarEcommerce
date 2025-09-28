@@ -42,8 +42,8 @@ export async function getAdminUser(req: NextRequest): Promise<AdminUser | null> 
   }
 }
 
-export function requireAdmin(handler: (req: NextRequest, admin: AdminUser, context?: { params: any }) => Promise<Response>) {
-  return async (req: NextRequest, context?: { params: any }) => {
+export function requireAdmin(handler: (req: NextRequest, admin: AdminUser) => Promise<Response>) {
+  return async (req: NextRequest) => {
     const admin = await getAdminUser(req);
     
     if (!admin) {
@@ -56,6 +56,35 @@ export function requireAdmin(handler: (req: NextRequest, admin: AdminUser, conte
       );
     }
 
-    return handler(req, admin, context);
+    return handler(req, admin);
+  };
+}
+
+export function requireAdminWithParams(
+  handler: (
+    req: NextRequest,
+    admin: AdminUser,
+    context: { params: Record<string, string> }
+  ) => Promise<Response>
+) {
+  return async (
+    req: NextRequest,
+    context: { params: Promise<Record<string, string>> }
+  ): Promise<Response> => {
+    const admin = await getAdminUser(req);
+    
+    if (!admin) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized - Admin access required" }),
+        { 
+          status: 401, 
+          headers: { "Content-Type": "application/json" } 
+        }
+      );
+    }
+
+    const resolvedParams = (await context?.params) ?? {};
+
+    return handler(req, admin, { params: resolvedParams });
   };
 }

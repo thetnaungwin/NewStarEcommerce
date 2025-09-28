@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
-import { requireAdmin } from "@/lib/admin-auth";
+import { requireAdminWithParams, AdminUser } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
 async function getUser(
   req: NextRequest,
-  admin: any,
-  context?: { params: { id: string } }
+  admin: AdminUser,
+  context: { params: Record<string, string> }
 ) {
   try {
     if (!context?.params?.id) {
@@ -46,8 +46,8 @@ async function getUser(
 
 async function deleteUser(
   req: NextRequest,
-  admin: any,
-  context?: { params: { id: string } }
+  admin: AdminUser,
+  context: { params: Record<string, string> }
 ) {
   try {
     if (!context?.params?.id) {
@@ -91,5 +91,5 @@ async function deleteUser(
   }
 }
 
-export const GET = requireAdmin(getUser);
-export const DELETE = requireAdmin(deleteUser);
+export const GET = requireAdminWithParams(getUser);
+export const DELETE = requireAdminWithParams(deleteUser);

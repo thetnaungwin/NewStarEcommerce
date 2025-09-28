@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
-import { requireAdmin } from "@/lib/admin-auth";
+import { requireAdminWithParams, AdminUser } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
 async function getProduct(
   req: NextRequest,
-  admin: any,
-  context?: { params: { id: string } }
+  admin: AdminUser,
+  context: { params: Record<string, string> }
 ) {
   try {
     if (!context?.params?.id) {
@@ -32,8 +32,8 @@ async function getProduct(
 
 async function updateProduct(
   req: NextRequest,
-  admin: any,
-  context?: { params: { id: string } }
+  admin: AdminUser,
+  context: { params: Record<string, string> }
 ) {
   try {
     if (!context?.params?.id) {
@@ -87,8 +87,8 @@ async function updateProduct(
 
 async function deleteProduct(
   req: NextRequest,
-  admin: any,
-  context?: { params: { id: string } }
+  admin: AdminUser,
+  context: { params: Record<string, string> }
 ) {
   try {
     if (!context?.params?.id) {
@@ -112,6 +112,6 @@ async function deleteProduct(
   }
 }
 
-export const GET = requireAdmin(getProduct);
-export const PUT = requireAdmin(updateProduct);
-export const DELETE = requireAdmin(deleteProduct);
+export const GET = requireAdminWithParams(getProduct);
+export const PUT = requireAdminWithParams(updateProduct);
+export const DELETE = requireAdminWithParams(deleteProduct);

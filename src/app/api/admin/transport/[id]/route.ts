@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
-import { requireAdmin } from "@/lib/admin-auth";
+import { requireAdminWithParams, AdminUser } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
 async function getTransportBooking(
   req: NextRequest,
-  admin: any,
-  context?: { params: { id: string } }
+  admin: AdminUser,
+  context: { params: Record<string, string> }
 ) {
   try {
     if (!context?.params?.id) {
@@ -43,8 +43,8 @@ async function getTransportBooking(
 
 async function updateTransportBooking(
   req: NextRequest,
-  admin: any,
-  context?: { params: { id: string } }
+  admin: AdminUser,
+  context: { params: Record<string, string> }
 ) {
   try {
     if (!context?.params?.id) {
@@ -84,8 +84,8 @@ async function updateTransportBooking(
 
 async function deleteTransportBooking(
   req: NextRequest,
-  admin: any,
-  context?: { params: { id: string } }
+  admin: AdminUser,
+  context: { params: Record<string, string> }
 ) {
   try {
     if (!context?.params?.id) {
@@ -109,6 +109,6 @@ async function deleteTransportBooking(
   }
 }
 
-export const GET = requireAdmin(getTransportBooking);
-export const PUT = requireAdmin(updateTransportBooking);
-export const DELETE = requireAdmin(deleteTransportBooking);
+export const GET = requireAdminWithParams(getTransportBooking);
+export const PUT = requireAdminWithParams(updateTransportBooking);
+export const DELETE = requireAdminWithParams(deleteTransportBooking);

@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
-import { requireAdmin } from "@/lib/admin-auth";
+import { requireAdmin, AdminUser } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
-async function handler(req: NextRequest, admin: any) {
+async function handler(req: NextRequest, admin: AdminUser) {
   try {
     const [
       totalProducts,

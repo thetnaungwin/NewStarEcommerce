@@ -133,7 +133,7 @@ export default function TransportationServicePage() {
                 ? "https://firebasestorage.googleapis.com/v0/b/chatbox-604ac.appspot.com/o/0-02-06-530d4bc6d313dfa4268ee037388cb8a65219f9c5d94161c8c111578f48e04815_dddeda08057db94c.jpg?alt=media&token=7a33c332-1876-4b8c-98dd-b8ae95836202"
                 : "https://firebasestorage.googleapis.com/v0/b/chatbox-604ac.appspot.com/o/0-02-0a-5cb4d85e9d83f94c89a02d8b2491dba9ac42ac73d70b4e6a5fb20ac229456548_9291396e22d4721f.jpg?alt=media&token=d04ef913-e166-4ea1-8efa-947fc0f25544";
             const driverName =
-              idx === 1 ? "Aung Chan" : idx === 2 ? "Ko Test" : "Moe Kaung";
+              idx === 1 ? "Aung Chan" : idx === 2 ? "Ar Kar" : "Moe Kaung";
             return (
               <div key={idx} className="bg-white rounded-lg shadow-md p-6">
                 <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden">
